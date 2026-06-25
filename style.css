@@ -1,0 +1,882 @@
+/* ==========================================================================
+   Stardew Valley Guidebook Redesigned Game-UI Stylesheet
+   ========================================================================== */
+
+/* Font Import: Isamanru Webfont */
+@font-face {
+  font-family: 'Isamanru';
+  src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Gonggames/GongGothicLight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Isamanru';
+  src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Gonggames/GongGothicMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Isamanru';
+  src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Gonggames/GongGothicBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --wood: #9B6B3E;
+  --light-wood: #D8B37A;
+  --paper: #FFF4D6;
+  --forest: #4E7D3A;
+  --grass: #7FB64F;
+  --sky: #87CEEB;
+  --sunlight: #FFD36B;
+  --brown-outline: #3A2B22;
+
+  --font-isamanru: 'Isamanru', sans-serif;
+  --pixel-border: 6px solid var(--brown-outline);
+  --wood-shadow: 0 10px 0 var(--brown-outline);
+  --paper-shadow: 0 6px 0 rgba(58, 43, 34, 0.2);
+}
+
+/* ==========================================================================
+   Global Reset & Font Enforcement
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-isamanru) !important;
+  color: var(--brown-outline);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 16px;
+}
+::-webkit-scrollbar-track {
+  background: var(--brown-outline);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--wood);
+  border: 4px solid var(--brown-outline);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Tool-Based Cursor System
+   ========================================================================== */
+/* Default Cursor: Leaf */
+body, html {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M8 4h16v4H8V4zm-4 4h24v4H4V8zm-2 4h28v8H2v-8zm2 8h24v4H4v-4zm4 4h16v4H8v-4z' fill='%233A2B22'/%3E%3Cpath d='M8 8h16v12H8V8z' fill='%237FB64F'/%3E%3Cpath d='M12 12h8v4h-8v-4z' fill='%23FFD36B'/%3E%3C/svg%3E"), auto;
+}
+
+/* Hover over Interactive Cards / Slots: Pickaxe */
+.parchment:hover, .npc-frame:hover, .season-tab:hover, .bundle-item:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M20 2h10v10H20V2zM16 6h4v4h-4V6zm-4 4h4v4h-4v-4zm-4 4h4v4H8v-4zm-4 4h4v4H4v-4zm-4 4h4v4H0v-4z' fill='%233A2B22'/%3E%3Cpath d='M24 6h4v4h-4V6z' fill='%23FFD36B'/%3E%3Cpath d='M8 18h4v4H8v-4zm4-4h4v4h-4v-4z' fill='%239B6B3E'/%3E%3C/svg%3E"), pointer;
+}
+
+/* Hover over Buttons: Hand Cursor */
+.btn:hover, input[type="checkbox"]:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M12 2h8v8h-8V2zm-4 8h4v8H8v-8zm12 0h4v8h-4v-8zm-8 8h12v6H8v-6zm4 6h4v6h-4v-6z' fill='%233A2B22'/%3E%3Cpath d='M12 10h8v8h-8v-8z' fill='%23FFF4D6'/%3E%3C/svg%3E"), pointer;
+}
+
+/* Hover over Navigation / Links: Sword */
+nav a:hover, .header-logo:hover, footer a:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M20 2h10v4H20V2zm-4 4h6v4h-6V6zm-4 4h6v4h-6v-4zm-4 4h6v4H8v-4zm-4 4h6v4H4v-4zm-4 4h4v4H0v-4z' fill='%233A2B22'/%3E%3Cpath d='M20 6h4v4h-4V6zm-4 4h4v4h-4v-4z' fill='%2387CEEB'/%3E%3Cpath d='M8 18h2v2H8v-2z' fill='%23FFD36B'/%3E%3C/svg%3E"), pointer;
+}
+
+/* Default Interactive Overrides: Watering Can */
+a:hover, button:hover, select:hover, label:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M8 4H12V8H8V4ZM16 4H20V8H16V4ZM12 8H16V12H12V8ZM8 12H12V16H8V12ZM16 12H20V16H16V12ZM4 16H8V20H4V16ZM20 16H24V20H20V16ZM0 20H4V24H0V20ZM24 20H28V24H24V20ZM4 24H24V28H4V24ZM8 28H16V32H8V28Z' fill='%23FFD36B'/%3E%3C/svg%3E"), pointer;
+}
+
+/* ==========================================================================
+   Structural Environment Sections
+   ========================================================================== */
+.town-section {
+  padding: 80px 24px;
+  border-bottom: 8px solid var(--brown-outline);
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Opaque container wrapper inside background environment */
+.town-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Environment Images assignment */
+.env--farm-morning { background-image: url('assets/backgrounds/hero_morning_farm.png'); }
+.env--farmhouse { background-image: url('assets/backgrounds/farmhouse_interior.png'); }
+.env--crops { background-image: url('assets/backgrounds/hero_morning_farm.png'); filter: hue-rotate(30deg); }
+.env--town { background-image: url('assets/backgrounds/hero_morning_farm.png'); filter: sepia(0.15); }
+.env--beach { background-image: url('assets/backgrounds/beach_dock.png'); }
+.env--cave { background-image: url('assets/backgrounds/mountain_cave.png'); }
+.env--night { background-image: url('assets/backgrounds/night_farm.png'); }
+
+/* ===============================
+   Header
+================================= */
+
+.header{
+    background:url("./assets/backgrounds/header-bg.png")
+    center/cover no-repeat;
+    padding:40px 0 25px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* Logo */
+
+.logo-wrap{
+
+    width:100%;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+.logo{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    object-fit:cover;
+
+}
+
+/* Navigation */
+
+.main-nav{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:35px;
+    background:url("./assets/images/nav-board.png")
+    center/100% 100% no-repeat;
+    min-height:82px;
+    padding:0 65px;
+}
+
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:78px;
+    gap:6px;
+    text-decoration:none;
+    color:#FFF6DD;
+    font-size:15px;
+    font-family:'Isamanru';
+}
+
+.nav-icon{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+    image-rendering:pixelated;
+    transition:.25s;
+    filter:
+        drop-shadow(1px 1px 0 #4a2f16);
+}
+
+.nav-item:hover{
+    transform:translateY(-4px);
+}
+
+.nav-item:hover .nav-icon{
+    transform:scale(1.15);
+}
+
+/* Menu */
+
+.main-nav a{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#FFF4D6;
+    text-decoration:none;
+    font-family:'Isamanru';
+    font-size:20px;
+    transition:.25s;
+}
+
+.main-nav img{
+    width:26px;
+    height:26px;
+    image-rendering:pixelated;
+}
+
+.main-nav a:hover{
+    transform:translateY(-3px);
+    color:#FFD85A;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+#hero {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-billboard {
+  background-color: rgba(255, 244, 214, 0.95);
+  border: 8px solid var(--brown-outline);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: var(--wood-shadow);
+  outline: 6px solid var(--wood);
+  outline-offset: -16px;
+  position: relative;
+}
+
+.hero-billboard h1 {
+  font-size: 3rem;
+  color: var(--wood);
+  text-shadow: 3px 3px 0 var(--sunlight);
+  margin-bottom: 12px;
+}
+
+.hero-subtitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   In-Game Wood Boards & Parchment Paper
+   ========================================================================== */
+.wood-board {
+  background-color: var(--wood);
+  border: 8px solid var(--brown-outline);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--wood-shadow);
+  position: relative;
+  outline: 6px solid var(--light-wood);
+  outline-offset: -14px;
+}
+
+.wood-board__title {
+  text-align: center;
+  color: var(--paper);
+  font-size: 2.2rem;
+  margin-bottom: 28px;
+  text-shadow: 3px 3px 0 var(--brown-outline);
+}
+
+.parchment {
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--paper-shadow);
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.parchment::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  border-top: 4px solid var(--brown-outline);
+  border-left: 4px solid var(--brown-outline);
+  width: 12px;
+  height: 12px;
+}
+
+.parchment::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 4px solid var(--brown-outline);
+  border-right: 4px solid var(--brown-outline);
+  width: 12px;
+  height: 12px;
+}
+
+.parchment:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 0 var(--brown-outline);
+}
+
+.parchment h3 {
+  color: var(--wood);
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  border-bottom: 4px dashed var(--light-wood);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 4px solid var(--brown-outline);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 0 var(--brown-outline);
+  transition: all 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+
+.btn--primary {
+  background-color: var(--forest);
+  color: #fff !important;
+  text-shadow: 2px 2px 0 var(--brown-outline);
+}
+
+.btn--primary:hover {
+  background-color: var(--grass);
+  animation: slight-bounce 0.4s ease infinite alternate;
+  box-shadow: 0 6px 0 var(--sunlight);
+}
+
+.btn--secondary {
+  background-color: var(--paper);
+  color: var(--wood) !important;
+}
+
+.btn--secondary:hover {
+  background-color: var(--sunlight);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   NPC Friendship Panels
+   ========================================================================== */
+.npc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.npc-frame {
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--paper-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.portrait-wrapper {
+  background-color: var(--light-wood);
+  border: 4px solid var(--brown-outline);
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.25);
+}
+
+.gift-box {
+  width: 100%;
+  background-color: rgba(155, 107, 62, 0.15);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   Community Center Progress & Bundles
+   ========================================================================== */
+.cc-tracker {
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 28px;
+}
+
+.progress-bar {
+  height: 28px;
+  background-color: var(--light-wood);
+  border: 4px solid var(--brown-outline);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.progress-fill {
+  width: 60%;
+  height: 100%;
+  background-color: var(--forest);
+  border-right: 4px solid var(--brown-outline);
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.bundle-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bundle-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fff;
+  border: 4px solid var(--brown-outline);
+  border-radius: 8px;
+  padding: 12px 18px;
+}
+
+.bundle-checkbox {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 4px solid var(--brown-outline);
+  background-color: #fff;
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+  position: relative;
+}
+
+.bundle-checkbox:checked {
+  background-color: var(--forest);
+}
+
+.bundle-checkbox:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.bundle-reward {
+  margin-left: auto;
+  font-size: 0.85rem;
+  background-color: var(--light-wood);
+  border: 2px solid var(--brown-outline);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Stardew Tables
+   ========================================================================== */
+.table-wrapper {
+  overflow-x: auto;
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.stardew-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--paper);
+  text-align: left;
+}
+
+.stardew-table th, .stardew-table td {
+  padding: 14px 18px;
+  border-bottom: 4px solid var(--brown-outline);
+}
+
+.stardew-table th {
+  background-color: var(--wood);
+  color: var(--paper);
+  font-weight: 700;
+}
+
+.stardew-table tr:last-child td {
+  border-bottom: none;
+}
+
+.stardew-table tr:hover {
+  background-color: rgba(255, 211, 107, 0.25);
+}
+
+/* ==========================================================================
+   FAQ Section (Dialogue Accordion)
+   ========================================================================== */
+.dialogue-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dialogue-item {
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  background-color: var(--paper);
+  overflow: hidden;
+  box-shadow: var(--paper-shadow);
+}
+
+.dialogue-toggle {
+  display: none;
+}
+
+.dialogue-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-weight: 700;
+  background-color: var(--light-wood);
+  border-bottom: 4px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.dialogue-trigger::after {
+  content: '▼';
+  font-size: 0.95rem;
+  transition: transform 0.2s ease;
+}
+
+.dialogue-toggle:checked + .dialogue-trigger {
+  border-bottom-color: var(--brown-outline);
+  background-color: var(--sunlight);
+}
+
+.dialogue-toggle:checked + .dialogue-trigger::after {
+  transform: rotate(180deg);
+}
+
+.dialogue-content {
+  max-height: 0;
+  padding: 0 20px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background-color: var(--paper);
+}
+
+.dialogue-toggle:checked ~ .dialogue-content {
+  max-height: 250px;
+  padding: 20px;
+}
+
+/* ==========================================================================
+   Section Environments & Grids
+   ========================================================================== */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.season-tab {
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.season-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 3px solid var(--brown-outline);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 var(--brown-outline);
+  margin-bottom: 12px;
+}
+
+.season-tab--spring .season-badge { background-color: #ff9ebd; }
+.season-tab--summer .season-badge { background-color: #ffa154; }
+.season-tab--fall .season-badge { background-color: #b5c754; }
+.season-tab--winter .season-badge { background-color: #87ceeb; }
+
+/* ==========================================================================
+   Aside Widget Panel
+   ========================================================================== */
+.main-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 992px) {
+  .main-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+aside .widget {
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--paper-shadow);
+}
+
+aside h3 {
+  border-bottom: 3px dashed var(--brown-outline);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  color: var(--wood);
+}
+
+.widget-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.widget-list li a {
+  color: var(--brown-outline);
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.widget-list li a:hover {
+  color: var(--forest);
+}
+
+/* ==========================================================================
+   Footer Section (Status Bar Style)
+   ========================================================================== */
+footer {
+  background-color: var(--wood);
+  border-top: 8px solid var(--brown-outline);
+  padding: 40px 24px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+  background-color: var(--paper);
+  border: 4px solid var(--brown-outline);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--paper-shadow);
+}
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--wood);
+  text-decoration: none;
+  text-shadow: 2px 2px 0 var(--sunlight);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--brown-outline);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.footer-links a:hover {
+  color: var(--forest);
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--brown-outline);
+  margin-top: 16px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Nature Animations
+   ========================================================================== */
+/* Clouds */
+.clouds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.cloud {
+  position: absolute;
+  background-color: #fff;
+  opacity: 0.75;
+  border-radius: 10px;
+  height: 24px;
+  width: 90px;
+  animation: move-clouds 45s linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.cloud::before { width: 35px; height: 35px; top: -15px; left: 10px; }
+.cloud::after { width: 30px; height: 30px; top: -10px; right: 15px; }
+
+.cloud--1 { top: 10%; animation-duration: 55s; }
+.cloud--2 { top: 25%; animation-duration: 75s; animation-delay: -15s; }
+.cloud--3 { top: 40%; animation-duration: 45s; animation-delay: -5s; }
+
+@keyframes move-clouds {
+  0% { transform: translateX(-150px); }
+  100% { transform: translateX(100vw); }
+}
+
+/* Falling Leaves */
+.leaves-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.leaf-fall {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background-color: var(--leaf-green);
+  border-radius: 14px 0;
+  opacity: 0.8;
+  animation: fall-and-spin 12s linear infinite;
+}
+.leaf-fall--1 { left: 15%; animation-duration: 9s; }
+.leaf-fall--2 { left: 45%; animation-duration: 14s; animation-delay: 3s; }
+.leaf-fall--3 { left: 75%; animation-duration: 10s; animation-delay: 5s; }
+
+@keyframes fall-and-spin {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(80vh) rotate(540deg); opacity: 0; }
+}
+
+/* Fireflies */
+.fireflies-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #ffff80;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffff80;
+  animation: glow-float 7s ease-in-out infinite;
+}
+.firefly--1 { top: 75%; left: 10%; animation-delay: 0s; }
+.firefly--2 { top: 55%; left: 50%; animation-delay: 2.5s; }
+.firefly--3 { top: 85%; left: 85%; animation-delay: 4.5s; }
+
+@keyframes glow-float {
+  0%, 100% { transform: translateY(0) scale(0.7); opacity: 0.1; }
+  50% { transform: translateY(-30px) scale(1.1); opacity: 0.9; }
+}
+
+/* Walking Chicken */
+.walking-chicken {
+  position: absolute;
+  bottom: 8px;
+  right: 40px;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  animation: chicken-walk 28s linear infinite;
+}
+@keyframes chicken-walk {
+  0% { transform: translateX(100px) scaleX(-1); }
+  45% { transform: translateX(-350px) scaleX(-1); }
+  50% { transform: translateX(-350px) scaleX(1); }
+  95% { transform: translateX(100px) scaleX(1); }
+  100% { transform: translateX(100px) scaleX(-1); }
+}
+
+/* Swaying Grass */
+.swaying-grass {
+  animation: sway 2.5s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+@keyframes sway {
+  0% { transform: rotate(-6deg); }
+  100% { transform: rotate(6deg); }
+}
